@@ -1,14 +1,21 @@
 import React, { Component } from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./getWeb3";
-
+import { LineChart, PieChart } from "react-chartkick";
+import "chart.js";
 import "./App.css";
 
 const GAS = 500000;
 const GAS_PRICE = "20000000000";
 
 class App extends Component {
-  state = { data: 0, web3: null, accounts: null, contract: null };
+  state = {
+    allData: 0,
+    data: 0,
+    web3: null,
+    accounts: null,
+    contract: null,
+  };
 
   componentDidMount = async () => {
     try {
@@ -80,14 +87,32 @@ class App extends Component {
     this.setState({ data });
   };
 
+  readAllData = async () => {
+    let allData = await this.state.contract.methods.getAllData().call();
+    let result = {};
+    allData = allData.map((element) => Number(element));
+
+    for (let i = 0; i < allData.length; i++) {
+      result[i] = allData[i];
+    }
+
+    this.setState({ allData: result });
+  };
+
   render() {
     if (!this.state.web3) {
       return <div>Loading Web3, accounts, and contract...</div>;
     }
+
+    let test = this.state.allData;
+    console.log("test", test);
+
     return (
       <div className="App">
         <button onClick={this.activateLasers}>Activate Lasers</button>
         <button onClick={this.readData}>Read Data</button>
+        <button onClick={this.readAllData}>Read Data</button>
+        <LineChart data={this.state.allData} />
         <h1>{this.state.data}</h1>
       </div>
     );

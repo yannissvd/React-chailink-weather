@@ -13,6 +13,7 @@ import "@chainlink/contracts/src/v0.4/ChainlinkClient.sol";
  */
 contract SimpleStorage is ChainlinkClient {
     uint256 public data = 1;
+    uint256[] public allData;
 
     /**
      * @notice Deploy the contract with a specified address for the LINK
@@ -78,6 +79,7 @@ contract SimpleStorage is ChainlinkClient {
         recordChainlinkFulfillment(_requestId)
     {
         data = _data;
+        allData.push(data);
     }
 
     /**
@@ -115,5 +117,9 @@ contract SimpleStorage is ChainlinkClient {
 
     function getData() public returns (uint256) {
         return data;
+    }
+
+    function getAllData() public view returns (uint256[]) {
+        return allData;
     }
 }
