@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import SimpleStorageContract from "./contracts/SimpleStorage.json";
 import getWeb3 from "./getWeb3";
-import { LineChart, PieChart } from "react-chartkick";
+import { LineChart } from "react-chartkick";
 import "chart.js";
 import "./App.css";
 
@@ -55,17 +55,38 @@ class App extends Component {
     //const response = await contract.methods.get().call();
     // Update state with the result.
     //this.setState({ storageValue: response });
-    const oracleAddress =
-      process.env.TRUFFLE_CL_BOX_ORACLE_ADDRESS ||
-      "0xc99B3D447826532722E41bc36e644ba3479E4365";
-    const jobId =
-      process.env.TRUFFLE_CL_BOX_JOB_ID || "3cff0a3524694ff8834bda9cf9c779a1";
-    const payment = process.env.TRUFFLE_CL_BOX_PAYMENT || "1000000000000000000";
+    // const oracleAddress =
+    //   process.env.TRUFFLE_CL_BOX_ORACLE_ADDRESS ||
+    //   "0x4a3fbbb385b5efeb4bc84a25aaadcd644bd09721";
+    // const jobId =
+    //   process.env.TRUFFLE_CL_BOX_JOB_ID || "67c9353f7cc94102b750f84f32027217";
+    // const payment = process.env.TRUFFLE_CL_BOX_PAYMENT || "1000000000000000000";
+    // const url =
+    //   process.env.TRUFFLE_CL_BOX_URL ||
+    //   "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD";
+    // const path =
+    //   process.env.TRUFFLE_CL_BOX_JSON_PATH || "root.data.weather.0.avgtempC";
+    // const times = process.env.TRUFFLE_CL_BOX_TIMES || "100";
+    // console.log("CONTRACT: ", contract._address);
+    // const tx = await contract.methods
+    //   .createRequestTo(
+    //     oracleAddress,
+    //     web3.utils.toHex(jobId),
+    //     payment,
+    //     url,
+    //     path,
+    //     times
+    //   )
+    //   .send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
+    // console.log(tx);
+
+    const oracleAddress = "0x4a3fbbb385b5efeb4bc84a25aaadcd644bd09721";
+    const jobId = "67c9353f7cc94102b750f84f32027217";
+    const payment = web3.utils.toWei("0.1");
     const url =
-      process.env.TRUFFLE_CL_BOX_URL ||
-      "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD";
-    const path = process.env.TRUFFLE_CL_BOX_JSON_PATH || "USD";
-    const times = process.env.TRUFFLE_CL_BOX_TIMES || "100";
+      "http://api.worldweatheronline.com/premium/v1/past-weather.ashx";
+    const path = "data.weather.0.avgtempC";
+    const q = "London";
     console.log("CONTRACT: ", contract._address);
     const tx = await contract.methods
       .createRequestTo(
@@ -74,7 +95,7 @@ class App extends Component {
         payment,
         url,
         path,
-        times
+        q
       )
       .send({ from: this.state.accounts[0], gas: GAS, gasPrice: GAS_PRICE });
     console.log(tx);
