@@ -130,9 +130,9 @@ class App extends Component {
 
     return (
       <div className="App">
-        <button onClick={this.activateLasers}>Activate Lasers</button>
-        <button onClick={this.readData}>Read Data</button>
-        <button onClick={this.readAllData}>Read Data</button>
+        <button onClick={this.activateLasers}>Get London Temperature</button>
+        <button onClick={this.readData}>Print Temperature</button>
+        <button onClick={this.readAllData}>Visualise</button>
         <LineChart data={this.state.allData} />
         <h1>{this.state.data}</h1>
       </div>
